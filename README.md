@@ -1,104 +1,112 @@
 # Loan Application Prediction: Machine Learning Project
 
-This project aims to predict whether a loan application will be accepted or rejected based on applicant data. The dataset contains various features, including demographic, financial, and verification details of loan applicants.
+This project aims to predict whether a loan application will be **accepted** or **rejected** based on applicant data. The dataset contains features such as demographic, financial, and verification details of the applicants. The project involves various machine learning models, ensemble techniques, and optimization strategies to improve prediction accuracy.
 
 ## Table of Contents
 
 - [Project Overview](#project-overview)
 - [Approach Taken](#approach-taken)
 - [Data Preprocessing](#data-preprocessing)
+  - [Feature Engineering](#feature-engineering)
+  - [Handling Missing Values](#handling-missing-values)
+  - [Feature Encoding](#feature-encoding)
 - [Modeling and Evaluation](#modeling-and-evaluation)
   - [Base Model](#base-model)
-  - [Fine-Tuning & Optimization](#fine-tuning--optimization)
-- [Ensemble Methods](#ensemble-methods)
+  - [Optimization Techniques](#optimization-techniques)
+  - [Ensemble Methods](#ensemble-methods)
 - [Results & Insights](#results--insights)
 - [Conclusion](#conclusion)
 - [How to Run the Code](#how-to-run-the-code)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
 ---
 
 ## Project Overview
 
-The objective of this project is to build a predictive model to determine the **Application Status** (Approved/Declined) of two-wheeler loan applications based on a set of features, including the applicant's demographic and financial information. The project includes preprocessing, multiple machine learning models, model optimization, and ensemble methods for better accuracy.
+The objective of this project is to build a predictive model that can determine the **Application Status** (Approved/Declined) of two-wheeler loan applications using a set of features. These features include demographic and financial details of loan applicants, along with information such as verification statuses. By using various machine learning models, we aim to identify patterns in the data that distinguish between approved and declined applications.
 
 ---
 
 ## Approach Taken
 
-### 1. **Data Preprocessing**
-The first step involved cleaning and preprocessing the data:
-- Handled missing values.
-- Categorical features were encoded using **LabelEncoder**.
-- Continuous variables were normalized.
-- Data was split into training and test sets with a ratio of 80:20.
+### 1. **Data Understanding and Exploration**
+We started by exploring the dataset to understand the structure and features available. The data includes labeled entries for training (`Assignment_Train.csv`), while the test dataset (`Assignment_Test.csv`) lacks the target variable **Application Status**.
 
-The preprocessing pipeline was designed to ensure consistent transformation of both the training and test datasets.
+We also consulted the `Assignment_FeatureDictionary.xlsx` file, which provides a detailed description of each variable to understand their meaning and data types.
 
-### 2. **Modeling**
-We trained various machine learning models and compared their performance using key evaluation metrics such as **accuracy, precision, recall, F1-score, log loss, and ROC-AUC**.
+### 2. **Data Preprocessing**
 
-#### Models used:
-1. Random Forest Classifier
-2. Support Vector Machine (SVM)
-3. k-Nearest Neighbors (k-NN)
-4. Decision Tree Classifier
-5. Gradient Boosting Classifier
-6. Logistic Regression
-7. XGBoost Classifier
-8. Naive Bayes
-9. Perceptron
-10. Stochastic Gradient Descent (SGD)
-11. Multi-layer Perceptron (MLP)
+#### **Feature Engineering**
+Some important variables in the dataset include:
+- **HDB BRANCH STATE**: Location-based information.
+- **AADHAR VERIFIED**: Verification status of the applicant.
+- **CIBIL Score**: Creditworthiness score of the applicant.
+- **EMPLOY CONSTITUTION**: Type of employment of the applicant.
 
----
+We did not create new features, but considered how existing ones would impact the model.
 
-## Data Preprocessing
+#### **Handling Missing Values**
+- **Categorical Features**: Missing values in categorical features were imputed using the most frequent value.
+- **Numerical Features**: Missing values in numerical columns, like `CIBIL Score` and `AGE`, were handled using mean imputation.
 
-### **Steps Followed:**
-1. **Feature Encoding:** Categorical features were encoded using **LabelEncoder** for simplicity.
-2. **Scaling:** We applied normalization to continuous numerical features for better convergence of the models.
-3. **Train/Test Split:** We split the dataset into an 80% training set and a 20% test set.
-4. **Pipeline Setup:** A preprocessing pipeline was built using scikit-learn to ensure consistent transformation of both train and test data.
+#### **Feature Encoding**
+We encoded categorical variables such as **HDB BRANCH STATE** and **MARITAL STATUS** using **LabelEncoder** from scikit-learn to convert them into numerical values.
+
+#### **Train/Test Split**
+We split the `Assignment_Train.csv` dataset into 80% training data and 20% validation data to evaluate the models before testing them on the actual test set.
 
 ---
 
 ## Modeling and Evaluation
 
 ### **Base Model**
-We started with a **Multi-layer Perceptron (MLP)** as the base model for the task. The model was trained using a standard feedforward neural network architecture. After the initial model evaluation, the following metrics were recorded:
+We initially chose a **Multi-layer Perceptron (MLP)** as the base model, utilizing a feedforward neural network architecture with the following configuration:
+- **Input Layer**: Number of features = 15
+- **Hidden Layers**: Two layers with ReLU activation
+- **Output Layer**: Two classes (Approved/Declined)
 
 #### **Performance on Train Data**
-- **Accuracy:** 99.96%
-- **Precision:** 94%
-- **Recall:** 87%
-- **F1 Score:** 90%
+- **Accuracy**: 99.96%
+- **Precision**: 94%
+- **Recall**: 87%
+- **F1 Score**: 90%
 
 #### **Performance on Test Data**
-- **Accuracy:** 84.45%
-- **Precision:** 85%
-- **Recall:** 78%
-- **F1 Score:** 81%
+- **Accuracy**: 84.45%
+- **Precision**: 85%
+- **Recall**: 78%
+- **F1 Score**: 81%
 
 ### **Optimization Techniques**
-We performed **Grid Search** and **Bayesian Optimization** to fine-tune the hyperparameters of the base MLP model.
+To improve model performance, we used:
+1. **Grid Search**: To systematically search for the best hyperparameters.
+2. **Bayesian Optimization**: For more efficient hyperparameter tuning.
 
-Key parameters tuned:
-1. **Learning Rate**
-2. **Hidden Layer Structure** (number of layers, neurons per layer)
-3. **Regularization Parameters** (L2 penalty)
-4. **Batch Size and Epochs**
+We focused on tuning the following hyperparameters:
+- **Learning Rate**
+- **Number of Hidden Layers and Neurons**
+- **L2 Regularization (for preventing overfitting)**
+- **Batch Size and Epochs**
 
-The best configuration was chosen based on cross-validation scores, and further evaluation was performed on both train and test data.
-
----
+After optimization, the MLP model demonstrated more stable results with balanced accuracy and precision.
 
 ### **Ensemble Methods**
-Several ensemble techniques were explored to improve model performance by combining predictions from multiple models:
+To improve predictions, we explored the following ensemble techniques:
 
-1. **Bagging**: This method reduces variance by averaging predictions from multiple models. A **BaggingClassifier** with Decision Trees was used.
-2. **Boosting**: Models were sequentially trained using **Gradient Boosting Machines (GBM)**, **LightGBM**, and **CatBoost** to focus on difficult cases in the dataset.
-3. **Stacking**: Predictions from multiple base models were used as input for another model (meta-learner) to improve accuracy.
-4. **Voting Classifier**: Combined predictions of the top-performing models using a majority voting approach.
+1. **Bagging (Bootstrap Aggregating)**:
+   - Used a **BaggingClassifier** with Decision Trees to reduce variance in the model.
+   - Ensemble models generated more stable predictions than individual classifiers.
+
+2. **Boosting**:
+   - Implemented **Gradient Boosting Machines (GBM)**, **LightGBM**, and **CatBoost** to sequentially correct errors of weaker models.
+
+3. **Stacking**:
+   - Combined predictions from multiple base models (e.g., SVM, Logistic Regression, and XGBoost) using a meta-learner for better overall predictions.
+
+4. **Voting Classifier**:
+   - Combined models using both hard voting and soft voting to aggregate predictions based on majority or probability estimates.
 
 ---
 
@@ -121,19 +129,17 @@ Several ensemble techniques were explored to improve model performance by combin
 | Multi-layer Perceptron (MLP)      | 99.96%         | 84.45%        |
 
 ### **Insights**
-1. **Random Forest Classifier** and **Decision Tree Classifier** achieved near-perfect accuracy on the train set, suggesting potential overfitting. However, their performance on the test set was around 83.88%.
-2. **Logistic Regression** and **XGBoost** demonstrated strong generalization with test accuracies of 85.60% and 85.08%, respectively.
-3. **Support Vector Machine (SVM)** and **Gradient Boosting Classifier** performed well, with balanced accuracy between train and test sets.
-4. **Ensemble Methods** provided marginal improvements in accuracy but helped reduce the variance in predictions.
-5. **MLP** showed strong performance as a base model, and after fine-tuning, it provided comparable results to XGBoost and Logistic Regression.
+- **Random Forest** and **Decision Tree** classifiers had near-perfect accuracy on the training data, which may indicate overfitting, but their test performance was reasonable.
+- **Logistic Regression**, **XGBoost**, and **MLP** models had strong generalization with accuracies exceeding 85% on test data.
+- **Ensemble techniques** such as **Stacking** and **Voting Classifier** improved test accuracy and provided stable predictions.
 
 ---
 
 ## Conclusion
 
-- **Best Models**: Logistic Regression, XGBoost, and fine-tuned MLP demonstrated strong performance on the test dataset.
-- **Ensemble Techniques**: Stacking and Boosting techniques provided robust solutions by combining different model predictions.
-- **Next Steps**: Fine-tuning and validation of ensemble methods with a focus on reducing overfitting in Random Forest and Decision Tree models.
+- **Best Performing Models**: Logistic Regression, XGBoost, and fine-tuned MLP showed the most reliable performance on the test dataset.
+- **Ensemble Methods**: Techniques like Boosting and Stacking provided more robust and accurate predictions by leveraging multiple models.
+- **Next Steps**: Further refinement of Random Forest and Decision Tree models to reduce overfitting is recommended.
 
 ---
 
@@ -152,4 +158,25 @@ Several ensemble techniques were explored to improve model performance by combin
    python main.py
    ```
 4. **View the results**:
-   Predictions and model evaluations will be saved in the `results/` directory.
+   The predictions and model evaluations will be saved in the `results/` directory.
+
+---
+
+## Contributing
+
+Feel free to fork this repository, make improvements, and submit pull requests. Your contributions are welcome! We appreciate your contributions and will review pull requests promptly.
+
+---
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+---
+
+## Contact
+
+For any questions or suggestions, please reach out to:
+
+GitHub: Kumarmilan02  
+Feel free to contact me for any inquiries or discussions related to this project.
