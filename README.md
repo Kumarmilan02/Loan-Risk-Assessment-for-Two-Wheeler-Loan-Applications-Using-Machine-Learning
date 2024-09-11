@@ -129,11 +129,23 @@ To improve predictions, we explored the following ensemble techniques:
 | Stochastic Gradient Descent (SGD) | 93.79%         | 85.86%        |
 | Multi-layer Perceptron (MLP)      | 99.96%         | 84.45%        |
 
+### **Ensemble Methods Performance**
+
+| Model                            | Train Accuracy | Test Accuracy |
+|-----------------------------------|----------------|---------------|
+| Bagging                           | 99.95%         | 85.03%        |
+| Boosting                          | 85.83%         | 83.36%        |
+| Stacking                          | 98.99%         | 83.25%        |
+| Voting Classifier                  | 97.38%         | 84.04%        |
+| Gradient Boosting Machines (GBM)  | 83.28%         | 82.42%        |
+| LightGBM                          | 90.49%         | 84.66%        |
+| CatBoost                          | 89.24%         | 83.78%        |
+
 ### **Insights**
 - **Random Forest** and **Decision Tree** classifiers had near-perfect accuracy on the training data, which may indicate overfitting, but their test performance was reasonable.
 - **Logistic Regression**, **XGBoost**, and **MLP** models had strong generalization with accuracies exceeding 85% on test data.
-- **Ensemble techniques** such as **Stacking** and **Voting Classifier** improved test accuracy and provided stable predictions.
-
+- **Ensemble methods** like **Bagging** and **Voting Classifier** provided improved test accuracies, demonstrating their ability to aggregate predictions effectively.
+- **LightGBM** showed the best test accuracy among ensemble methods, indicating its effectiveness in handling the dataset.
 ---
 
 ## Conclusion
