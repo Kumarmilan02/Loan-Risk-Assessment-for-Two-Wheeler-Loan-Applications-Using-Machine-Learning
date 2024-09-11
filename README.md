@@ -2,6 +2,7 @@
 
 This project aims to predict whether a loan application will be **accepted** or **rejected** based on applicant data. The dataset contains features such as demographic, financial, and verification details of the applicants. The project involves various machine learning models, ensemble techniques, and optimization strategies to improve prediction accuracy.
 
+colab link: https://colab.research.google.com/drive/1lQOjxSb87SDqx2dm6OA2h-tdj4jqUSn1#scrollTo=UFuttENueL62
 ## Table of Contents
 
 - [Project Overview](#project-overview)
