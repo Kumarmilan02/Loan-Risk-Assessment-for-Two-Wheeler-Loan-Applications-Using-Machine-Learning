@@ -1,0 +1,2 @@
+# Loan-Risk-Assessment-for-Two-Wheeler-Loan-Applications-Using-Machine-Learning
+This project predicts the approval or rejection of two-wheeler loan applications using machine learning. Based on applicant and third-party data, a classification model is trained, optimized, and used to predict outcomes for test data. Deliverables include a CSV of predictions, a report, and organized code on GitHub or Colab.
